@@ -36,6 +36,9 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  price: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

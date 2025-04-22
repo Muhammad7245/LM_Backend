@@ -12,7 +12,9 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 // import routes 
 const appointmentRoute = require("./routes/appointment");
+const userRoute = require("./routes/user");
 app.use("/api", appointmentRoute);
+app.use("/api", userRoute);
 
 
 mongoose

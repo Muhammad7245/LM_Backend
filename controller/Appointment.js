@@ -1,3 +1,3 @@
-const Appointment = require('../models/Appointment');
+const Appointment = require("../modals/Appointment");
 
-exports.createAppointment = async (req, res) => {}
+exports.createAppointment = async (req, res) => {};
