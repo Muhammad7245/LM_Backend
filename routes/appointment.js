@@ -2,6 +2,7 @@ const router = require(`express`).Router();
 const Appointment = require("../modals/Appointment");
 
 
+
 router.post("/book", async (req, res) => {
   const {
     date,

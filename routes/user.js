@@ -3,6 +3,7 @@ const User = require("../modals/User");
 const bcrypt = require("bcrypt");
 // Number of salt rounds
 const saltRounds = 10;
+const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
     const { name, email, password } = req.body;
@@ -55,16 +56,26 @@ router.post("/register", async (req, res) => {
       if (!isPasswordCorrect) {
         return res.status(401).json({ message: "Incorrect password" });
       }
+
+          // 🔐 Create JWT token
+    const token = jwt.sign(
+      { id: user._id, email: user.email }, // payload
+      process.env.JWT_SECRET,             // secret
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" } // options
+    );
   
       // 3. Success
-      res.status(200).json({
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-        },
-        message: "Login successful",
-      });
+    // ✅ Send back token and user info
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      message: "Login successful",
+    });
     } catch (err) {
       console.error("Login error:", err);
       res.status(500).json({ message: "Server error", error: err });
